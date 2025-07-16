@@ -135,3 +135,84 @@ h4,
     padding-right: 1rem;
   }
 }
+
+/* Specific styles for chat history to ensure it scrolls and doesn't get cut */
+.chat-history {
+  height: calc(100% - 160px); /* Adjust based on header/input height */
+  /* This height calculation might need fine-tuning based on actual header/input heights */
+}
+
+/* Adjustments for smaller screens for general layout */
+@media (max-width: 640px) { /* Tailwind's 'sm' breakpoint */
+  .chatbot-container {
+    height: 80vh; /* Make chatbot taller on very small screens if needed */
+  }
+  .chat-history {
+    height: calc(100% - 140px); /* Adjust for smaller input/header on mobile */
+  }
+}
+
+/* NEW: Styles for Markdown Tables */
+table {
+  width: 100%;
+  border-collapse: collapse; /* Ensures borders are single lines */
+  margin-top: 1rem; /* Space above the table */
+  margin-bottom: 1rem; /* Space below the table */
+  overflow-x: auto; /* Allows horizontal scrolling on small screens for wide tables */
+  display: block; /* Ensures overflow-x works */
+}
+
+th, td {
+  border: 1px solid #e2e8f0; /* Light gray border */
+  padding: 0.75rem; /* Padding inside cells */
+  text-align: left; /* Align text to the left */
+  vertical-align: top; /* Align content to the top */
+}
+
+th {
+  background-color: #f8fafc; /* Light background for headers */
+  font-weight: 600; /* Semi-bold headers */
+  color: #2d3748; /* Darker text for headers */
+}
+
+tr:nth-child(even) {
+  background-color: #fdfdfe; /* Slightly different background for even rows */
+}
+
+/* Responsive table behavior for smaller screens */
+@media (max-width: 640px) {
+  table, thead, tbody, th, td, tr {
+    display: block; /* Make table elements behave like blocks */
+  }
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px; /* Hide table headers visually but keep them for screen readers */
+  }
+
+  tr {
+    border: 1px solid #e2e8f0;
+    margin-bottom: 0.625em;
+  }
+
+  td {
+    border: none;
+    border-bottom: 1px solid #e2e8f0;
+    position: relative;
+    padding-left: 50%; /* Make space for the pseudo-element label */
+    text-align: right;
+  }
+
+  td:before {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    content: attr(data-label); /* Use data-label for mobile table headers */
+    font-weight: bold;
+    text-align: left;
+  }
+}
