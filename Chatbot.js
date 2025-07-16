@@ -120,11 +120,11 @@ const Chatbot = () => {
     ]);
 
     try {
-      // Use the Netlify environment variable for the backend URL
-      const API_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000"; // Fallback for local dev
+      // FIXED: Updated API_BASE_URL to the provided Render URL
+      const API_BASE_URL = "https://cachatbot-python.onrender.com";
       
       const response = await fetch(
-        `${API_URL}/ask_bot`,
+        `${API_BASE_URL}/ask_bot`,
         {
           method: "POST",
           headers: {
