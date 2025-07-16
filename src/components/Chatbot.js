@@ -15,7 +15,8 @@ const Chatbot = () => {
     userId,
     isPremium,
     questionsUsed,
-    updateUserStatus, // This is now used indirectly via checkUserStatus
+    // eslint-disable-next-line no-unused-vars
+    updateUserStatus, // This is now used indirectly via checkUserStatus, but not directly called here.
   } = useAuth();
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] =
@@ -120,11 +121,11 @@ const Chatbot = () => {
     ]);
 
     try {
-      // FIXED: Updated API_BASE_URL to the provided Render URL
-      const API_BASE_URL = "https://cachatbot-python.onrender.com";
+      // Use the Netlify environment variable for the backend URL
+      const API_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000"; // Fallback for local dev
       
       const response = await fetch(
-        `${API_BASE_URL}/ask_bot`,
+        `${API_URL}/ask_bot`,
         {
           method: "POST",
           headers: {
