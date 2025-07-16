@@ -307,12 +307,6 @@ const Chatbot = () => {
             CA Intermediate
           </option>
           <option value="Final">CA Final</option>
-          <option value="Self-Paced Online Module">
-            CA Self-Paced Online Module (SPOM)
-          </option>
-          <option value="Information Technology and Soft Skills Training">
-            CA IT & Soft Skills Training
-          </option>
         </select>
       </div>
 
