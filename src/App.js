@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Toaster } from "react-hot-toast";
+// eslint-disable-next-line no-unused-vars
 import toast from "react-hot-toast"; // This import is here because Toaster is used here, but toast() is called in children.
 // eslint-disable-next-line no-unused-vars
 import { AuthProvider, useAuth } from "./contexts/AuthContext"; // useAuth is not directly used here, but AuthProvider is.
@@ -17,7 +18,8 @@ const AppContent = () => {
   // they are passed to or used within child components.
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
-  const openAuthModal = () => setIsAuthModalOpen(true);
+  // eslint-disable-next-line no-unused-vars
+  const openAuthModal = () => setIsAuthModalOpen(true); // openAuthModal is passed as a prop to Header
   const closeAuthModal = () => setIsAuthModalOpen(false);
 
   return (
