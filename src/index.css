@@ -1,0 +1,218 @@
+body {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  background: linear-gradient(
+    to bottom right,
+    #fdfbfb,
+    #ebedee
+  );
+  color: #1e293b;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  scroll-behavior: smooth;
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-display {
+  font-family: "Urbanist", sans-serif;
+}
+
+/* Custom components and utility classes */
+/* Glassmorphism effect for containers */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(14px);
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Call-to-action button styling */
+.cta-button {
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+}
+
+/* Custom scrollbar for chat messages */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Modal overlay styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem; /* Add padding for very small screens */
+}
+
+/* Modal content styling */
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: 90%; /* Responsive width */
+  max-width: 450px;
+  text-align: center;
+  position: relative;
+  margin: 1rem; /* Add some margin on very small screens */
+}
+
+/* Modal close button styling */
+.modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+/* Modal input field styling */
+.modal-input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+/* Modal button styling */
+.modal-button {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.modal-button.primary {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.modal-button.primary:hover {
+  background-color: #2563eb;
+}
+
+/* Responsive adjustments for overall sections (if needed beyond Tailwind) */
+/* This is mostly handled by Tailwind classes like px-4 md:px-8 etc. */
+/* But if you have specific fixed-width elements, you'd adjust them here */
+@media (max-width: 768px) {
+  .page-section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Specific styles for chat history to ensure it scrolls and doesn't get cut */
+.chat-history {
+  height: calc(100% - 160px); /* Adjust based on header/input height */
+  /* This height calculation might need fine-tuning based on actual header/input heights */
+}
+
+/* Adjustments for smaller screens for general layout */
+@media (max-width: 640px) { /* Tailwind's 'sm' breakpoint */
+  .chatbot-container {
+    height: 80vh; /* Make chatbot taller on very small screens if needed */
+  }
+  .chat-history {
+    height: calc(100% - 140px); /* Adjust for smaller input/header on mobile */
+  }
+}
+
+/* NEW: Styles for Markdown Tables */
+table {
+  width: 100%;
+  border-collapse: collapse; /* Ensures borders are single lines */
+  margin-top: 1rem; /* Space above the table */
+  margin-bottom: 1rem; /* Space below the table */
+  overflow-x: auto; /* Allows horizontal scrolling on small screens for wide tables */
+  display: block; /* Ensures overflow-x works */
+}
+
+th, td {
+  border: 1px solid #e2e8f0; /* Light gray border */
+  padding: 0.75rem; /* Padding inside cells */
+  text-align: left; /* Align text to the left */
+  vertical-align: top; /* Align content to the top */
+}
+
+th {
+  background-color: #f8fafc; /* Light background for headers */
+  font-weight: 600; /* Semi-bold headers */
+  color: #2d3748; /* Darker text for headers */
+}
+
+tr:nth-child(even) {
+  background-color: #fdfdfe; /* Slightly different background for even rows */
+}
+
+/* Responsive table behavior for smaller screens */
+@media (max-width: 640px) {
+  table, thead, tbody, th, td, tr {
+    display: block; /* Make table elements behave like blocks */
+  }
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px; /* Hide table headers visually but keep them for screen readers */
+  }
+
+  tr {
+    border: 1px solid #e2e8f0;
+    margin-bottom: 0.625em;
+  }
+
+  td {
+    border: none;
+    border-bottom: 1px solid #e2e8f0;
+    position: relative;
+    padding-left: 50%; /* Make space for the pseudo-element label */
+    text-align: right;
+  }
+
+  td:before {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    content: attr(data-label); /* Use data-label for mobile table headers */
+    font-weight: bold;
+    text-align: left;
+  }
+}
