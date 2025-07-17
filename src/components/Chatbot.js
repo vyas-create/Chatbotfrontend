@@ -32,6 +32,10 @@ const Chatbot = () => {
   const messagesEndRef = useRef(null);
   const chatHistoryRef = useRef([]); // To maintain chat history for API calls
 
+  // The scrollToBottom function is removed as it's currently unused.
+  // If you later want controlled scrolling (e.g., only for bot messages, or a scroll button),
+  // you can re-implement this function and its usage.
+  /*
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({
@@ -41,10 +45,9 @@ const Chatbot = () => {
       });
     }
   };
+  */
 
-  // FIXED: Commented out this useEffect to prevent automatic scrolling on send.
-  // If you later want controlled scrolling (e.g., only for bot messages, or a scroll button),
-  // you can re-implement this with more specific conditions.
+  // The useEffect that previously called scrollToBottom is already commented out.
   /*
   useEffect(() => {
     // Only scroll to bottom when new messages are added, not on every render
@@ -379,4 +382,3 @@ const Chatbot = () => {
 };
 
 export default Chatbot;
-
