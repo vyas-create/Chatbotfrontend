@@ -42,7 +42,10 @@ const Chatbot = () => {
     }
   };
 
-  // Re-enabled useEffect to ensure scrollToBottom is used and chat scrolls
+  // FIXED: Commented out this useEffect to prevent automatic scrolling on send.
+  // If you later want controlled scrolling (e.g., only for bot messages, or a scroll button),
+  // you can re-implement this with more specific conditions.
+  /*
   useEffect(() => {
     // Only scroll to bottom when new messages are added, not on every render
     if (messages.length > 0) {
@@ -52,6 +55,7 @@ const Chatbot = () => {
       }, 100);
     }
   }, [messages.length]); // Only depend on messages length, not the entire messages array
+  */
 
 
   const checkUserStatus = async () => {
@@ -375,3 +379,4 @@ const Chatbot = () => {
 };
 
 export default Chatbot;
+
