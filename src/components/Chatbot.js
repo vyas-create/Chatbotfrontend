@@ -6,6 +6,7 @@ import React, {
 import { useAuth } from "../contexts/AuthContext";
 import { Send, Loader2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from 'remark-gfm'; // Import remarkGfm for table support
 // eslint-disable-next-line no-unused-vars
 import toast from "react-hot-toast"; // toast is used via toast.error, but ESLint might not catch it directly.
 
@@ -15,8 +16,7 @@ const Chatbot = () => {
     userId,
     isPremium,
     questionsUsed,
-    // eslint-disable-next-line no-unused-vars
-    updateUserStatus, // This is now used indirectly via checkUserStatus, but not directly called here.
+    updateUserStatus, // This is now used indirectly via checkUserStatus
   } = useAuth();
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] =
@@ -41,6 +41,10 @@ const Chatbot = () => {
     }
   };
 
+  // FIXED: Commented out this useEffect to prevent automatic scrolling on send.
+  // If you later want controlled scrolling (e.g., only for bot messages, or a scroll button),
+  // you can re-implement this with more specific conditions.
+  /*
   useEffect(() => {
     // Only scroll to bottom when new messages are added, not on every render
     if (messages.length > 0) {
@@ -50,6 +54,7 @@ const Chatbot = () => {
       }, 100);
     }
   }, [messages.length]); // Only depend on messages length, not the entire messages array
+  */
 
   // FIXED: checkUserStatus is now called in useEffect and sendMessage
   const checkUserStatus = async () => {
@@ -121,11 +126,11 @@ const Chatbot = () => {
     ]);
 
     try {
-      // Use the Netlify environment variable for the backend URL
-      const API_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000"; // Fallback for local dev
+      // FIXED: Updated API_BASE_URL to the provided Render URL
+      const API_BASE_URL = "https://cachatbot-python.onrender.com";
       
       const response = await fetch(
-        `${API_URL}/ask_bot`,
+        `${API_BASE_URL}/ask_bot`,
         {
           method: "POST",
           headers: {
@@ -246,8 +251,7 @@ const Chatbot = () => {
       if (remaining <= 0) {
         return "You have used all your free questions. Please upgrade for unlimited access! ✨ (Feature coming soon)";
       }
-      return `You've used ${questionsUsed}/10 free lifetime questions. ${remaining} remaining.`;
-    }
+         }
   };
 
   const isInputDisabled = () => {
@@ -311,6 +315,7 @@ const Chatbot = () => {
       </div>
 
       {/* Chat History */}
+      {/* Added flex-grow to make chat history fill available space */}
       <div className="chat-history flex-grow overflow-y-auto p-4 bg-gray-50 custom-scrollbar">
         {messages.map((message) => (
           <div
@@ -322,7 +327,7 @@ const Chatbot = () => {
             }`}
           >
             {message.type === "bot" ? (
-              <ReactMarkdown>
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {message.content}
               </ReactMarkdown>
             ) : (
