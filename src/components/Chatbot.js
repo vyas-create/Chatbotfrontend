@@ -16,7 +16,8 @@ const Chatbot = () => {
     userId,
     isPremium,
     questionsUsed,
-    updateUserStatus, // This is now used indirectly via checkUserStatus
+    // Removed updateUserStatus from destructuring as it's not directly used here
+    // and the checkUserStatus is a mock that doesn't utilize it.
   } = useAuth();
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] =
@@ -41,10 +42,7 @@ const Chatbot = () => {
     }
   };
 
-  // FIXED: Commented out this useEffect to prevent automatic scrolling on send.
-  // If you later want controlled scrolling (e.g., only for bot messages, or a scroll button),
-  // you can re-implement this with more specific conditions.
-  /*
+  // Re-enabled useEffect to ensure scrollToBottom is used and chat scrolls
   useEffect(() => {
     // Only scroll to bottom when new messages are added, not on every render
     if (messages.length > 0) {
@@ -54,9 +52,8 @@ const Chatbot = () => {
       }, 100);
     }
   }, [messages.length]); // Only depend on messages length, not the entire messages array
-  */
 
-  // FIXED: checkUserStatus is now called in useEffect and sendMessage
+
   const checkUserStatus = async () => {
     // This function is currently mocked as Firestore is removed.
     // In a real scenario, it would fetch actual user status from your backend.
@@ -68,8 +65,8 @@ const Chatbot = () => {
       questionsUsedFreeTier: 0,
       questionsRemainingPremium: 500
     });
-    // If updateUserStatus is a context function to update global state, call it here
-    // updateUserStatus(); // This would be called if checkUserStatus actually fetched new user data
+    // If updateUserStatus from useAuth was meant to be called, it would be done here, e.g.:
+    // updateUserStatus(fetchedUserData);
   };
 
   useEffect(() => {
@@ -84,7 +81,7 @@ const Chatbot = () => {
       },
     ]);
     // In a real app, you might fetch initial chat history here
-    checkUserStatus(); // FIXED: Call checkUserStatus on mount
+    checkUserStatus(); // Call checkUserStatus on mount
   }, []); // Empty dependency array means this runs once on mount
 
 
@@ -126,9 +123,8 @@ const Chatbot = () => {
     ]);
 
     try {
-      // FIXED: Updated API_BASE_URL to the provided Render URL
       const API_BASE_URL = "https://cachatbot-python.onrender.com";
-      
+
       const response = await fetch(
         `${API_BASE_URL}/ask_bot`,
         {
@@ -180,7 +176,7 @@ const Chatbot = () => {
         });
       }
 
-      await checkUserStatus(); // FIXED: Call checkUserStatus after message is sent
+      await checkUserStatus(); // Call checkUserStatus after message is sent
     } catch (error) {
       console.error(
         "Error sending message:",
@@ -237,7 +233,6 @@ const Chatbot = () => {
   };
 
   const getStatusText = () => {
-    // FIXED: Logic using isAuthenticated, isPremium, questionsUsed is active
     if (!isAuthenticated) {
       return "Please sign in to view your chat limits.";
     }
@@ -251,17 +246,16 @@ const Chatbot = () => {
       if (remaining <= 0) {
         return "You have used all your free questions. Please upgrade for unlimited access! ✨ (Feature coming soon)";
       }
-         }
+      return `Free User. Questions remaining: ${remaining}/10.`; // Added return for free user status
+    }
   };
 
   const isInputDisabled = () => {
-    // FIXED: Logic using isAuthenticated, isPremium, questionsUsed is active
     if (!isAuthenticated) return true;
     if (isPremium) return false;
     return questionsUsed >= 10;
   };
 
-  // FIXED: Authentication check for rendering prompt is active
   if (!isAuthenticated) {
     return (
       <div className="signin-prompt flex flex-col items-center justify-center h-full">
@@ -272,7 +266,6 @@ const Chatbot = () => {
           Access our intelligent chatbot by
           signing in. It's quick and easy!
         </p>
-        {/* This button should ideally trigger the AuthModal */}
         <button
           onClick={() => { /* You might want to pass openAuthModal prop here */ }}
           className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"
