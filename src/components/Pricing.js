@@ -39,7 +39,6 @@ const Pricing = () => {
                 className="text-red-500 mr-2"
                 size={16}
               />
-              No Priority Support
             </li>
           </ul>
           <button className="bg-gray-200 text-gray-800 font-semibold px-6 py-3 rounded-full mt-auto">
@@ -74,7 +73,6 @@ const Pricing = () => {
                 className="text-green-300 mr-2"
                 size={16}
               />
-              ⚡ Priority Access
             </li>
           </ul>
           <button className="bg-white text-indigo-700 font-semibold px-6 py-3 rounded-full hover:bg-gray-100 mt-auto hidden">
