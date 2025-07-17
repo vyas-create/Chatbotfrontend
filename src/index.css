@@ -1,3 +1,12 @@
+/*
+  This CSS file provides custom styles for the chatbot UI,
+  complementing the utility classes provided by Tailwind CSS.
+  The @tailwind and @layer directives have been removed as they are
+  only processed during a Tailwind build step, not when
+  linking the CDN directly.
+*/
+
+/* Base styles for the entire application */
 body {
   font-family: "Plus Jakarta Sans", sans-serif;
   background: linear-gradient(
@@ -137,8 +146,9 @@ h4,
 }
 
 /* Specific styles for chat history to ensure it scrolls and doesn't get cut */
+/* Removed fixed height calc; flex-grow in JS will handle sizing */
 .chat-history {
-  height: calc(100% - 160px); /* Adjust based on header/input height */
+  /* height: calc(100% - 160px); */ /* Removed */
   /* This height calculation might need fine-tuning based on actual header/input heights */
 }
 
@@ -147,9 +157,10 @@ h4,
   .chatbot-container {
     height: 80vh; /* Make chatbot taller on very small screens if needed */
   }
-  .chat-history {
-    height: calc(100% - 140px); /* Adjust for smaller input/header on mobile */
-  }
+  /* Removed chat-history height adjustment here as flex-grow handles it */
+  /* .chat-history {
+    height: calc(100% - 140px);
+  } */
 }
 
 /* NEW: Styles for Markdown Tables */
@@ -216,3 +227,4 @@ tr:nth-child(even) {
     text-align: left;
   }
 }
+
